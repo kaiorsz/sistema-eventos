@@ -1,10 +1,10 @@
-# Projeto de Gerenciamento de Vendas
+# Projeto de Gerenciamento de Vendas de Ingressos
 
-Este projeto consiste em um sistema de gerenciamento de vendas, desenvolvido em PostgreSQL, que inclui as tabelas de `produto`, `venda` e `venda_produto`.
+Este projeto consiste em um sistema de gerenciamento de vendas, desenvolvido em PostgreSQL, que inclui as tabelas de `evento`, `usuario`, `endereco` e `ingresso`.
 
 ## Como Rodar o Projeto
 
-1. **Configuração do Banco de Dados:**
+1. **ConfiguraÃ§Ã£o do Banco de Dados:**
     - Certifique-se de ter o PostgreSQL instalado em seu ambiente.
     - Execute as seguintes consultas SQL em seu banco de dados para criar as tabelas:
 
@@ -43,14 +43,14 @@ CREATE TABLE endereco (
 )
 ```
 
-2. **Configuração do Projeto:**
-    - Clone este repositório em seu ambiente.
+2. **ConfiguraÃ§Ã£o do Projeto:**
+    - Clone este repositÃ³rio em seu ambiente.
     - Abra o arquivo `application.properties` e insira as credenciais do seu banco de dados.
 
-3. **Execução do Projeto:**
-    - Certifique-se de que todas as dependências do projeto estão instaladas.
+3. **ExecuÃ§Ã£o do Projeto:**
+    - Certifique-se de que todas as dependÃªncias do projeto estÃ£o instaladas.
     - Inicie o servidor.
 
-4. **Acesso ao Swagger(Documentação da API):**
+4. **Acesso ao Swagger(DocumentaÃ§Ã£o da API):**
     - URL_DO_SEU_PROJETO/swagger-ui/index.html
-    - URL padrão: http://localhost:8080/swagger-ui/index.html
+    - URL padrÃ£o: http://localhost:8080/swagger-ui/index.html
