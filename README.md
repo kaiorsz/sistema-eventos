@@ -54,3 +54,4 @@ CREATE TABLE endereco (
 4. **Acesso ao Swagger(Documentação da API):**
     - URL_DO_SEU_PROJETO/swagger-ui/index.html
     - URL padrão: http://localhost:8080/swagger-ui/index.html
+    
