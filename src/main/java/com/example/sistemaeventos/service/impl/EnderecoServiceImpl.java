@@ -5,13 +5,8 @@ import com.example.sistemaeventos.dao.EventoDao;
 import com.example.sistemaeventos.dao.IngressoDao;
 import com.example.sistemaeventos.dao.UsuarioDao;
 import com.example.sistemaeventos.entity.Endereco;
-import com.example.sistemaeventos.entity.Evento;
-import com.example.sistemaeventos.entity.Ingresso;
-import com.example.sistemaeventos.entity.Usuario;
 import com.example.sistemaeventos.pojo.input.EnderecoDTO;
-import com.example.sistemaeventos.pojo.input.VendaDTO;
 import com.example.sistemaeventos.service.EnderecoService;
-import com.example.sistemaeventos.service.IngressoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +53,7 @@ public @Service class EnderecoServiceImpl implements EnderecoService {
         }
         try {
             Boolean usuarioExiste = usuarioDao.encontraPorId(enderecoDTO.getUsuario()) != null;
-            Boolean eventoExiste = eventoDao.encontraPorId(enderecoDTO.getEvento()) != null;
+            Boolean eventoExiste = eventoDao.encontraPorId(enderecoDTO.getEvento(), null) != null;
             if(!usuarioExiste && !eventoExiste) {
                 throw new RuntimeException("Usuário ou evento não encontrado.");
             }

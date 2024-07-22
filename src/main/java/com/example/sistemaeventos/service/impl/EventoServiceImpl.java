@@ -67,7 +67,7 @@ public @Service class EventoServiceImpl implements EventoService {
 
     @Override
     public Object findById(Integer id) {
-        Evento evento = eventoDao.encontraPorId(id);
+        Evento evento = eventoDao.encontraPorId(id, null);
         if (evento == null) {
             throw new RuntimeException("Evento não encontrado.");
         }
@@ -76,7 +76,7 @@ public @Service class EventoServiceImpl implements EventoService {
 
     @Override
     public void cancel(Integer id) {
-        Evento evento = eventoDao.encontraPorId(id);
+        Evento evento = eventoDao.encontraPorId(id, null);
         if (evento == null) {
             throw new RuntimeException("Evento não encontrado.");
         }

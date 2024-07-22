@@ -17,9 +17,18 @@ public class EventoDao {
     @Autowired
     private ConexaoJDBC conexaoJDBC;
 
-    public Evento encontraPorId(Integer id) {
+    public Evento encontraPorId(Integer id, Boolean confirmado) {
         try {
+
             StringBuilder sql = new StringBuilder("SELECT * FROM evento WHERE id = ?");
+
+            if (confirmado != null && confirmado) {
+                sql.append(" AND status = 1");
+            }
+            if (confirmado != null && !confirmado) {
+                sql.append(" AND status = 2");
+            }
+
             List<Evento> eventos = conexaoJDBC.getJdbcTemplate().query(sql.toString(), new EventoRowMapper(), id);
 
             if (eventos.isEmpty()) {

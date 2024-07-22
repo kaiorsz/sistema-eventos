@@ -37,7 +37,7 @@ public @Service class IngressoServiceImpl implements IngressoService {
         if(usuario == null) {
             throw new RuntimeException("Usuário não encontrado.");
         }
-        Evento evento = eventoDao.encontraPorId(vendaDTO.getEvento());
+        Evento evento = eventoDao.encontraPorId(vendaDTO.getEvento(), true);
         if(evento == null) {
             throw new RuntimeException("Evento não encontrado.");
         }
@@ -70,7 +70,7 @@ public @Service class IngressoServiceImpl implements IngressoService {
         List<IngressoVO> ingressoVOS = new ArrayList<>();
 
         for(Ingresso ingresso : ingressos) {
-            Evento evento = eventoDao.encontraPorId(ingresso.getEvento());
+            Evento evento = eventoDao.encontraPorId(ingresso.getEvento(), null);
             IngressoVO ingressoVO = new IngressoVO();
             ingressoVO.setId(ingresso.getId());
             ingressoVO.setEvento(evento);
