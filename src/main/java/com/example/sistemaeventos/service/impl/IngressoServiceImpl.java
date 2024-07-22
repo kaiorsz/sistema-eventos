@@ -7,10 +7,12 @@ import com.example.sistemaeventos.entity.Evento;
 import com.example.sistemaeventos.entity.Ingresso;
 import com.example.sistemaeventos.entity.Usuario;
 import com.example.sistemaeventos.pojo.input.VendaDTO;
+import com.example.sistemaeventos.pojo.output.IngressoVO;
 import com.example.sistemaeventos.service.IngressoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public @Service class IngressoServiceImpl implements IngressoService {
@@ -41,5 +43,51 @@ public @Service class IngressoServiceImpl implements IngressoService {
         }
 
         ingressoDao.vendeIngresso(vendaDTO);
+    }
+
+    @Override
+    public Object findById(Integer id) {
+        Ingresso ingresso = ingressoDao.encontraPorId(id);
+        if(ingresso == null) {
+            throw new RuntimeException("Ingresso não encontrado.");
+        }
+
+        return ingresso;
+    }
+
+    @Override
+    public Object findByUsuario(Integer id) {
+        Usuario usuario = usuarioDao.encontraPorId(id);
+        if(usuario == null) {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
+
+        List<Ingresso> ingressos = ingressoDao.encontraPorUsuario(id);
+        if(ingressos.isEmpty()) {
+            throw new RuntimeException("Nenhum ingresso encontrado.");
+        }
+
+        List<IngressoVO> ingressoVOS = new ArrayList<>();
+
+        for(Ingresso ingresso : ingressos) {
+            Evento evento = eventoDao.encontraPorId(ingresso.getEvento());
+            IngressoVO ingressoVO = new IngressoVO();
+            ingressoVO.setId(ingresso.getId());
+            ingressoVO.setEvento(evento);
+            ingressoVO.setUsuario(usuario);
+            ingressoVOS.add(ingressoVO);
+        }
+
+        return ingressos;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Ingresso ingresso = ingressoDao.encontraPorId(id);
+        if(ingresso == null) {
+            throw new RuntimeException("Ingresso não encontrado.");
+        }
+
+        ingressoDao.deletar(id);
     }
 }

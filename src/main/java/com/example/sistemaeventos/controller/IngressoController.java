@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,11 +36,42 @@ public class IngressoController {
         }
     }
 
+    @Operation(summary = "Encontrar um ingresso por id")
+    @GetMapping("/find")
+    public ResponseEntity<Object> findById(@RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(ingressoService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Encontrar um ingresso por usuario")
+    @GetMapping("/find/user")
+    public ResponseEntity<Object> findByUsuario(@RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(ingressoService.findByUsuario(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @Operation(summary = "Vender um ingresso")
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody VendaDTO vendaDTO) {
         try {
             ingressoService.vendeIngresso(vendaDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Deletar um ingresso (estornar)")
+    @DeleteMapping
+    public ResponseEntity<Object> delete(@RequestParam Integer id) {
+        try {
+            ingressoService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

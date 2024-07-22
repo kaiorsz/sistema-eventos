@@ -22,8 +22,44 @@ public class IngressoDao {
             StringBuilder sql = new StringBuilder("INSERT INTO ingresso (evento, usuario) VALUES (?, ?)");
             conexaoJDBC.getJdbcTemplate().update(sql.toString(), vendaDTO.getEvento(), vendaDTO.getUsuario());
 
-            sql = new StringBuilder("UPDATE evento SET quantidade_disponivel = quantidade_disponivel - 1 WHERE id = ?");
+            sql = new StringBuilder("UPDATE evento SET quantidadedisponivel = quantidadedisponivel - 1 WHERE id = ?");
             conexaoJDBC.getJdbcTemplate().update(sql.toString(), vendaDTO.getEvento());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public Ingresso encontraPorId(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder("SELECT * FROM ingresso WHERE id = ?");
+            List<Ingresso> ingressos = conexaoJDBC.getJdbcTemplate().query(sql.toString(), new IngressoRowMapper(), id);
+
+            if (ingressos.isEmpty()) {
+                return null;
+            }
+
+            return ingressos.get(0);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public List<Ingresso> encontraPorUsuario(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder("SELECT * FROM ingresso WHERE usuario = ?");
+            return conexaoJDBC.getJdbcTemplate().query(sql.toString(), new IngressoRowMapper(), id);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void deletar(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder("DELETE FROM ingresso WHERE id = ?");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), id);
+
+            sql = new StringBuilder("UPDATE evento SET quantidadedisponivel = quantidadedisponivel + 1 WHERE id = ?");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), id);
         } catch (Exception e) {
             throw e;
         }
@@ -39,15 +75,6 @@ public class IngressoDao {
             return ingresso;
         }
     }
-//
-//    public void criar(Ingresso ingresso) {
-//        try {
-//            StringBuilder sql = new StringBuilder("INSERT INTO ingresso (nome, descricao, quantidade_disponivel, valor_unitario) VALUES (?, ?, ?, ?)");
-//            conexaoJDBC.getJdbcTemplate().update(sql.toString(), ingresso.getNome(), ingresso.getDescricao(), ingresso.getQuantidade_disponivel(), ingresso.getValor_unitario());
-//        } catch (Exception e) {
-//            throw e;
-//        }
-//    }
 
     public List<Ingresso> encontrarIngressosVendidos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel) {
         try {

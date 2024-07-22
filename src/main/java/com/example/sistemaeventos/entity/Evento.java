@@ -9,6 +9,7 @@ public class Evento {
     private LocalDate dataFinal;
     private Double valorIngresso;
     private Integer quantidadeDisponivel;
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -56,5 +57,13 @@ public class Evento {
 
     public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

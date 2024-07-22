@@ -15,7 +15,8 @@ CREATE TABLE evento (
                        dataInicial DATE NOT NULL,
                        dataFinal DATE NOT NULL,
                        valoringresso DOUBLE PRECISION NOT NULL,
-                       quantidadedisponivel INTEGER NOT NULL
+                       quantidadedisponivel INTEGER NOT NULL,
+                       status INTEGER NOT NULL
 );
 CREATE TABLE usuario (
                        id SERIAL PRIMARY KEY,

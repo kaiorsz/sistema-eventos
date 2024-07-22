@@ -1,8 +1,6 @@
 package com.example.sistemaeventos.dao;
 
 import com.example.sistemaeventos.entity.Evento;
-import com.example.sistemaeventos.entity.Ingresso;
-import com.example.sistemaeventos.entity.Usuario;
 import com.example.sistemaeventos.jdbc.ConexaoJDBC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -35,9 +32,17 @@ public class EventoDao {
         }
     }
 
-    public List<Evento> encontrarTodos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel) {
+    public List<Evento> encontrarTodos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome) {
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM evento");
+
+            // Adicionando filtro
+            if (disponivel) {
+                sql.append(" WHERE quantidadedisponivel > 0 and datafinal > current_date() and status = 1");
+            }
+            if (nome != null && !nome.isEmpty()) {
+                sql.append(" WHERE evento LIKE '%").append(nome).append("%'");
+            }
 
             // Adicionando ordenação
             sql.append(" ORDER BY ").append(sortBy).append(" ").append(sortOrder);
@@ -54,8 +59,27 @@ public class EventoDao {
 
     public void criar(Evento evento) {
         try {
-            StringBuilder sql = new StringBuilder("INSERT INTO evento (evento, datainicial, datafinal, valoringresso, quantidadedisponivel) VALUES (?, ?, ?, ?, ?)");
-            conexaoJDBC.getJdbcTemplate().update(sql.toString(), evento.getEvento(), evento.getDataInicial(), evento.getDataFinal(), evento.getValorIngresso(), evento.getQuantidadeDisponivel());
+
+            StringBuilder sql = new StringBuilder("INSERT INTO evento (evento, datainicial, datafinal, valoringresso, quantidadedisponivel, status) VALUES (?, ?, ?, ?, ?, ?)");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), evento.getEvento(), evento.getDataInicial(), evento.getDataFinal(), evento.getValorIngresso(), evento.getQuantidadeDisponivel(), evento.getStatus());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void atualizar(Evento evento) {
+        try {
+            StringBuilder sql = new StringBuilder("UPDATE evento SET evento = ?, datainicial = ?, datafinal = ?, valoringresso = ?, quantidadedisponivel = ?, status = ? WHERE id = ?");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), evento.getEvento(), evento.getDataInicial(), evento.getDataFinal(), evento.getValorIngresso(), evento.getQuantidadeDisponivel(), evento.getStatus(), evento.getId());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void cancelar(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder("UPDATE evento SET status = 2 WHERE id = ?");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), id);
         } catch (Exception e) {
             throw e;
         }
@@ -71,6 +95,7 @@ public class EventoDao {
             evento.setDataFinal(rs.getObject("datafinal", LocalDate.class));
             evento.setValorIngresso(rs.getDouble("valoringresso"));
             evento.setQuantidadeDisponivel(rs.getInt("quantidadedisponivel"));
+            evento.setStatus(rs.getInt("status"));
             return evento;
         }
     }

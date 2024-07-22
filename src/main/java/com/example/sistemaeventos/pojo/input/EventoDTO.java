@@ -14,6 +14,7 @@ public class EventoDTO {
     private LocalDate dataFinal;
     private Double valorIngresso;
     private Integer quantidadeDisponivel;
+    private Integer status;
 
     public String getEvento() {
         return evento;
@@ -53,5 +54,13 @@ public class EventoDTO {
 
     public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

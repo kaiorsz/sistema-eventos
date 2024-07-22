@@ -1,8 +1,6 @@
 package com.example.sistemaeventos.controller;
 
 import com.example.sistemaeventos.pojo.input.UsuarioDTO;
-import com.example.sistemaeventos.pojo.input.VendaDTO;
-import com.example.sistemaeventos.service.IngressoService;
 import com.example.sistemaeventos.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +26,10 @@ public class UsuarioController {
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "0", required = false) int page,
                                           @RequestParam(defaultValue = "10", required = false) int size,
                                           @RequestParam(defaultValue = "id", required = false) String sortBy,
-                                          @RequestParam(defaultValue = "asc", required = false) String sortOrder) {
+                                          @RequestParam(defaultValue = "asc", required = false) String sortOrder,
+                                          @RequestParam(required = false) String nome) {
         try {
-            return ResponseEntity.ok(usuarioService.findAll(page, size, sortBy, sortOrder));
+            return ResponseEntity.ok(usuarioService.findAll(page, size, sortBy, sortOrder, nome));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -46,4 +45,17 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Atualizar um usuario")
+    @PostMapping("/update")
+    public ResponseEntity<Object> update(@RequestBody UsuarioDTO usuario,
+                                         @RequestParam Integer id) {
+        try {
+            usuarioService.atualizaUsuario(usuario, id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 }

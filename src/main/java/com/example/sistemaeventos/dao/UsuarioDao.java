@@ -42,9 +42,14 @@ public class UsuarioDao {
         }
     }
 
-    public List<Usuario> encontrarUsuarios(int page, int size, String sortBy, String sortOrder) {
+    public List<Usuario> encontrarUsuarios(int page, int size, String sortBy, String sortOrder, String nome) {
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM usuario");
+
+            // Adicionando filtro
+            if (nome != null && !nome.isEmpty()) {
+                sql.append(" WHERE upper(nome) LIKE '%").append(nome.toUpperCase()).append("%'");
+            }
 
             // Adicionando ordenação
             sql.append(" ORDER BY ").append(sortBy).append(" ").append(sortOrder);
@@ -63,6 +68,15 @@ public class UsuarioDao {
         try {
             StringBuilder sql = new StringBuilder("INSERT INTO usuario (nome, cpf, email, datanascimento) VALUES (?, ?, ?, ?)");
             conexaoJDBC.getJdbcTemplate().update(sql.toString(), usuario.getNome(), usuario.getCpf(), usuario.getEmail(), usuario.getDataNascimento());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void atualizaUsuario(UsuarioDTO usuario, Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder("UPDATE usuario SET nome = ?, cpf = ?, email = ?, datanascimento = ? WHERE id = ?");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), usuario.getNome(), usuario.getCpf(), usuario.getEmail(), usuario.getDataNascimento(), id);
         } catch (Exception e) {
             throw e;
         }
