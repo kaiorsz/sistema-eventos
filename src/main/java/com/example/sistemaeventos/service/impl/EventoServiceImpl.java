@@ -23,7 +23,7 @@ public @Service class EventoServiceImpl implements EventoService {
 
     @Override
     public List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data) {
-        if (!data.isEmpty()) {
+        if (data != null && !data.isEmpty()) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 sdf.parse(data);

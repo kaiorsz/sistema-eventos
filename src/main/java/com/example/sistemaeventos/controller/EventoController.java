@@ -3,6 +3,7 @@ package com.example.sistemaeventos.controller;
 import com.example.sistemaeventos.pojo.input.EventoDTO;
 import com.example.sistemaeventos.service.EventoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class EventoController {
                                           @RequestParam(defaultValue = "id", required = false) String sortBy,
                                           @RequestParam(defaultValue = "asc", required = false) String sortOrder,
                                           @RequestParam(required = false, defaultValue = "false") boolean disponivel,
-                                          @RequestParam(required = false) String data,
+                                          @RequestParam(required = false) @Parameter(example = "2020-01-30") String data,
                                           @RequestParam (required = false) String nome) {
         try {
             return ResponseEntity.ok(eventoService.findAll(page, size, sortBy, sortOrder, disponivel, nome, data));
