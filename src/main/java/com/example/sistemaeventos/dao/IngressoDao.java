@@ -76,7 +76,7 @@ public class IngressoDao {
         }
     }
 
-    public List<Ingresso> encontrarIngressosVendidos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel) {
+    public List<Ingresso> encontrarIngressosVendidos(Integer page, Integer size, String sortBy, String sortOrder) {
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM ingresso");
 

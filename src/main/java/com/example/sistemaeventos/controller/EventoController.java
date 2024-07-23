@@ -28,7 +28,7 @@ public class EventoController {
                                           @RequestParam(defaultValue = "10", required = false) int size,
                                           @RequestParam(defaultValue = "id", required = false) String sortBy,
                                           @RequestParam(defaultValue = "asc", required = false) String sortOrder,
-                                          @RequestParam(required = false, defaultValue = "false") boolean disponivel,
+                                          @RequestParam(required = false) Boolean disponivel,
                                           @RequestParam(required = false) @Parameter(example = "2020-01-30") String data,
                                           @RequestParam (required = false) String nome) {
         try {

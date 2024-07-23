@@ -27,10 +27,9 @@ public class IngressoController {
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "0", required = false) int page,
                                           @RequestParam(defaultValue = "10", required = false) int size,
                                           @RequestParam(defaultValue = "id", required = false) String sortBy,
-                                          @RequestParam(defaultValue = "asc", required = false) String sortOrder,
-                                          @RequestParam(required = false, defaultValue = "false") boolean disponivel) {
+                                          @RequestParam(defaultValue = "asc", required = false) String sortOrder) {
         try {
-            return ResponseEntity.ok(ingressoService.findAll(page, size, sortBy, sortOrder, disponivel));
+            return ResponseEntity.ok(ingressoService.findAll(page, size, sortBy, sortOrder));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

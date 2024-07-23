@@ -9,7 +9,7 @@ public interface IngressoService {
 
 //    void criaIngresso(IngressoDTO ingressoDTO);
 
-    List<Ingresso> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel);
+    List<Ingresso> findAll(Integer page, Integer size, String sortBy, String sortOrder);
 
     void vendeIngresso(VendaDTO vendaDTO);
 

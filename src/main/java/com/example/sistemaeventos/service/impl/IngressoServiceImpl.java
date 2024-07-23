@@ -25,8 +25,8 @@ public @Service class IngressoServiceImpl implements IngressoService {
     private EventoDao eventoDao;
 
     @Override
-    public List<Ingresso> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel) {
-        List<Ingresso> ingressos = ingressoDao.encontrarIngressosVendidos(page, size, sortBy, sortOrder, disponivel);
+    public List<Ingresso> findAll(Integer page, Integer size, String sortBy, String sortOrder) {
+        List<Ingresso> ingressos = ingressoDao.encontrarIngressosVendidos(page, size, sortBy, sortOrder);
 
         return ingressos;
     }

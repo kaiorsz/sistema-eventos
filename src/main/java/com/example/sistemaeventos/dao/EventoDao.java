@@ -45,16 +45,31 @@ public class EventoDao {
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM evento");
 
-            // Adicionando filtro
-            if (disponivel) {
-                sql.append(" WHERE quantidadedisponivel > 0 and datafinal > current_date() and status = 1");
+            boolean temFiltro = false;
+
+            if (disponivel != null) {
+                sql.append(" WHERE quantidadedisponivel > 0 AND datafinal > current_date AND status = " + (disponivel ? 1 : 2));
+                temFiltro = true;
             }
+
             if (nome != null && !nome.isEmpty()) {
-                sql.append(" WHERE evento LIKE '%").append(nome).append("%'");
+                if (temFiltro) {
+                    sql.append(" AND");
+                } else {
+                    sql.append(" WHERE");
+                    temFiltro = true;
+                }
+                sql.append(" evento LIKE '%").append(nome).append("%'");
             }
 
             if (data != null && !data.isEmpty()) {
-                sql.append(" WHERE datainicial = '").append(data).append("'");
+                if (temFiltro) {
+                    sql.append(" AND");
+                } else {
+                    sql.append(" WHERE");
+                    temFiltro = true;
+                }
+                sql.append(" datainicial = '").append(data).append("'");
             }
 
             // Adicionando ordenação
