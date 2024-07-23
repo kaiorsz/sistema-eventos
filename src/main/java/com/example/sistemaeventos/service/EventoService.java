@@ -2,13 +2,14 @@ package com.example.sistemaeventos.service;
 
 import com.example.sistemaeventos.entity.Evento;
 import com.example.sistemaeventos.pojo.input.EventoDTO;
+import com.example.sistemaeventos.pojo.output.EventoVO;
 
 import java.util.List;
 
 public interface EventoService {
 
 
-    List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data);
+    List<EventoVO> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data);
 
     void criaEvento(EventoDTO eventoDTO);
 

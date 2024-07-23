@@ -1,20 +1,27 @@
-package com.example.sistemaeventos.pojo.input;
+package com.example.sistemaeventos.pojo.output;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.sistemaeventos.entity.Evento;
+import com.example.sistemaeventos.entity.Usuario;
+import com.example.sistemaeventos.enums.StatusEventoEnum;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-public class EventoDTO {
+public class EventoVO {
+    private Integer id;
     private String evento;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-
     private LocalDate dataInicial;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataFinal;
     private Double valorIngresso;
     private Integer quantidadeDisponivel;
-    private Integer status;
+    private StatusEventoEnum status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getEvento() {
         return evento;
@@ -56,11 +63,11 @@ public class EventoDTO {
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
-    public Integer getStatus() {
+    public StatusEventoEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(StatusEventoEnum status) {
         this.status = status;
     }
 }

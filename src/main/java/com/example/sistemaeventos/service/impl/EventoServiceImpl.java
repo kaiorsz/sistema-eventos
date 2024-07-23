@@ -4,12 +4,15 @@ import com.example.sistemaeventos.dao.EventoDao;
 import com.example.sistemaeventos.dao.IngressoDao;
 import com.example.sistemaeventos.dao.UsuarioDao;
 import com.example.sistemaeventos.entity.Evento;
+import com.example.sistemaeventos.enums.StatusEventoEnum;
 import com.example.sistemaeventos.pojo.input.EventoDTO;
+import com.example.sistemaeventos.pojo.output.EventoVO;
 import com.example.sistemaeventos.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public @Service class EventoServiceImpl implements EventoService {
@@ -22,7 +25,7 @@ public @Service class EventoServiceImpl implements EventoService {
     private EventoDao eventoDao;
 
     @Override
-    public List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data) {
+    public List<EventoVO> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data) {
         if (data != null && !data.isEmpty()) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
@@ -34,7 +37,20 @@ public @Service class EventoServiceImpl implements EventoService {
 
         List<Evento> eventos = eventoDao.encontrarTodos(page, size, sortBy, sortOrder, disponivel, nome, data);
 
-        return eventos;
+        List<EventoVO> eventoVOS = new ArrayList<>();
+        for(Evento evento : eventos) {
+            EventoVO eventoVO = new EventoVO();
+            eventoVO.setId(evento.getId());
+            eventoVO.setEvento(evento.getEvento());
+            eventoVO.setDataInicial(evento.getDataInicial());
+            eventoVO.setDataFinal(evento.getDataFinal());
+            eventoVO.setQuantidadeDisponivel(evento.getQuantidadeDisponivel());
+            eventoVO.setValorIngresso(evento.getValorIngresso());
+            eventoVO.setStatus(StatusEventoEnum.getById(evento.getStatus()));
+            eventoVOS.add(eventoVO);
+        }
+
+        return eventoVOS;
     }
 
     @Override

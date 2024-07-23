@@ -13,6 +13,15 @@ public enum StatusEventoEnum {
         this.descricao = descricao;
     }
 
+    public static StatusEventoEnum getById(Integer id) {
+        for (StatusEventoEnum e : values()) {
+            if (e.id.equals(id)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     public Integer getId() {
         return id;
     }

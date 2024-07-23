@@ -10,7 +10,7 @@ public class UsuarioDTO {
     private String cpf;
     private String nome;
     private String email;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     public String getCpf() {
