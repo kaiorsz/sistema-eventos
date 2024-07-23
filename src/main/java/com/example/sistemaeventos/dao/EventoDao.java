@@ -95,10 +95,10 @@ public class EventoDao {
         }
     }
 
-    public void atualizar(Evento evento) {
+    public void atualizar(Evento evento, Integer id) {
         try {
             StringBuilder sql = new StringBuilder("UPDATE evento SET evento = ?, datainicial = ?, datafinal = ?, valoringresso = ?, quantidadedisponivel = ?, status = ? WHERE id = ?");
-            conexaoJDBC.getJdbcTemplate().update(sql.toString(), evento.getEvento(), evento.getDataInicial(), evento.getDataFinal(), evento.getValorIngresso(), evento.getQuantidadeDisponivel(), evento.getStatus(), evento.getId());
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), evento.getEvento(), evento.getDataInicial(), evento.getDataFinal(), evento.getValorIngresso(), evento.getQuantidadeDisponivel(), evento.getStatus(), id);
         } catch (Exception e) {
             throw e;
         }

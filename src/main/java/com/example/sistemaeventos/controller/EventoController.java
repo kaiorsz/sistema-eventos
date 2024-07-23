@@ -61,9 +61,10 @@ public class EventoController {
 
     @Operation(summary = "Atualizar um evento")
     @PostMapping("/update")
-    public ResponseEntity<Object> update(@RequestBody EventoDTO eventoDTO) {
+    public ResponseEntity<Object> update(@RequestBody EventoDTO eventoDTO,
+                                         @RequestParam Integer id) {
         try {
-            eventoService.atualizaEvento(eventoDTO);
+            eventoService.atualizaEvento(eventoDTO, id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

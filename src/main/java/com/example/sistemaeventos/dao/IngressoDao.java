@@ -53,13 +53,13 @@ public class IngressoDao {
         }
     }
 
-    public void deletar(Integer id) {
+    public void deletar(Integer id, Integer idEvento) {
         try {
             StringBuilder sql = new StringBuilder("DELETE FROM ingresso WHERE id = ?");
             conexaoJDBC.getJdbcTemplate().update(sql.toString(), id);
 
             sql = new StringBuilder("UPDATE evento SET quantidadedisponivel = quantidadedisponivel + 1 WHERE id = ?");
-            conexaoJDBC.getJdbcTemplate().update(sql.toString(), id);
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), idEvento);
         } catch (Exception e) {
             throw e;
         }

@@ -42,6 +42,10 @@ public @Service class IngressoServiceImpl implements IngressoService {
             throw new RuntimeException("Evento não encontrado.");
         }
 
+        if(evento.getQuantidadeDisponivel() <= 0) {
+            throw new RuntimeException("Ingressos esgotados.");
+        }
+
         ingressoDao.vendeIngresso(vendaDTO,evento.getValorIngresso());
     }
 
@@ -93,6 +97,6 @@ public @Service class IngressoServiceImpl implements IngressoService {
             throw new RuntimeException("Ingresso não encontrado.");
         }
 
-        ingressoDao.deletar(id);
+        ingressoDao.deletar(id, ingresso.getEvento());
     }
 }

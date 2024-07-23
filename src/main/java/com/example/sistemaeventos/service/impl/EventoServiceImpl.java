@@ -73,7 +73,7 @@ public @Service class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public void atualizaEvento(EventoDTO eventoDTO) {
+    public void atualizaEvento(EventoDTO eventoDTO, Integer id) {
         if (eventoDTO.getEvento() == null || eventoDTO.getEvento().isEmpty()) {
             throw new RuntimeException("Nome não pode ser vazio.");
         }
@@ -88,7 +88,7 @@ public @Service class EventoServiceImpl implements EventoService {
         }
 
         Evento evento = dtoToEntiy(eventoDTO);
-        eventoDao.atualizar(evento);
+        eventoDao.atualizar(evento, id);
     }
 
     @Override
