@@ -42,7 +42,7 @@ public @Service class IngressoServiceImpl implements IngressoService {
             throw new RuntimeException("Evento não encontrado.");
         }
 
-        ingressoDao.vendeIngresso(vendaDTO);
+        ingressoDao.vendeIngresso(vendaDTO,evento.getValorIngresso());
     }
 
     @Override
@@ -52,7 +52,12 @@ public @Service class IngressoServiceImpl implements IngressoService {
             throw new RuntimeException("Ingresso não encontrado.");
         }
 
-        return ingresso;
+        IngressoVO ingressoVO = new IngressoVO();
+        ingressoVO.setId(ingresso.getId());
+        ingressoVO.setEvento(eventoDao.encontraPorId(ingresso.getEvento(), null));
+        ingressoVO.setUsuario(usuarioDao.encontraPorId(ingresso.getUsuario()));
+
+        return ingressoVO;
     }
 
     @Override
@@ -78,7 +83,7 @@ public @Service class IngressoServiceImpl implements IngressoService {
             ingressoVOS.add(ingressoVO);
         }
 
-        return ingressos;
+        return ingressoVOS;
     }
 
     @Override

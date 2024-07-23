@@ -20,15 +20,16 @@ CREATE TABLE evento (
 );
 CREATE TABLE usuario (
                        id SERIAL PRIMARY KEY,
-                       cpf VARCHAR(11),
+                       cpf VARCHAR(11) UNIQUE,
                        nome VARCHAR(255) NOT NULL CHECK (nome <> ''),
-                       email VARCHAR(255) NOT NULL CHECK (email <> ''),
+                       email VARCHAR(255) NOT NULL CHECK (email <> '') UNIQUE,
                        datanascimento DATE NOT NULL
 );
 CREATE TABLE ingresso (
                        id SERIAL PRIMARY KEY,
                        evento INTEGER NOT NULL REFERENCES evento(id),
-                       usuario INTEGER NOT NULL REFERENCES usuario(id)
+                       usuario INTEGER NOT NULL REFERENCES usuario(id),
+                       preco DOUBLE PRECISION NOT NULL
 );
 CREATE TABLE endereco (
                         id SERIAL PRIMARY KEY,

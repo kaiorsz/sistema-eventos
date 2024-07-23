@@ -9,6 +9,7 @@ import com.example.sistemaeventos.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public @Service class EventoServiceImpl implements EventoService {
@@ -21,8 +22,17 @@ public @Service class EventoServiceImpl implements EventoService {
     private EventoDao eventoDao;
 
     @Override
-    public List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome) {
-        List<Evento> eventos = eventoDao.encontrarTodos(page, size, sortBy, sortOrder, disponivel, nome);
+    public List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data) {
+        if (!data.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                sdf.parse(data);
+            } catch (Exception e) {
+                throw new RuntimeException("Data inválida. Informe a data no formato yyyy-MM-dd.");
+            }
+        }
+
+        List<Evento> eventos = eventoDao.encontrarTodos(page, size, sortBy, sortOrder, disponivel, nome, data);
 
         return eventos;
     }

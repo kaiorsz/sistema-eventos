@@ -17,10 +17,10 @@ public class IngressoDao {
     @Autowired
     private ConexaoJDBC conexaoJDBC;
 
-    public void vendeIngresso(VendaDTO vendaDTO) {
+    public void vendeIngresso(VendaDTO vendaDTO, Double valorIngresso) {
         try {
-            StringBuilder sql = new StringBuilder("INSERT INTO ingresso (evento, usuario) VALUES (?, ?)");
-            conexaoJDBC.getJdbcTemplate().update(sql.toString(), vendaDTO.getEvento(), vendaDTO.getUsuario());
+            StringBuilder sql = new StringBuilder("INSERT INTO ingresso (evento, usuario, preco) VALUES (?, ?, ?)");
+            conexaoJDBC.getJdbcTemplate().update(sql.toString(), vendaDTO.getEvento(), vendaDTO.getUsuario(), valorIngresso);
 
             sql = new StringBuilder("UPDATE evento SET quantidadedisponivel = quantidadedisponivel - 1 WHERE id = ?");
             conexaoJDBC.getJdbcTemplate().update(sql.toString(), vendaDTO.getEvento());

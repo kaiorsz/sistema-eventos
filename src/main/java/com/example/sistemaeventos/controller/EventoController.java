@@ -28,9 +28,10 @@ public class EventoController {
                                           @RequestParam(defaultValue = "id", required = false) String sortBy,
                                           @RequestParam(defaultValue = "asc", required = false) String sortOrder,
                                           @RequestParam(required = false, defaultValue = "false") boolean disponivel,
+                                          @RequestParam(required = false) String data,
                                           @RequestParam (required = false) String nome) {
         try {
-            return ResponseEntity.ok(eventoService.findAll(page, size, sortBy, sortOrder, disponivel, nome));
+            return ResponseEntity.ok(eventoService.findAll(page, size, sortBy, sortOrder, disponivel, nome, data));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

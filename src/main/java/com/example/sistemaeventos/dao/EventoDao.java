@@ -41,7 +41,7 @@ public class EventoDao {
         }
     }
 
-    public List<Evento> encontrarTodos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome) {
+    public List<Evento> encontrarTodos(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data) {
         try {
             StringBuilder sql = new StringBuilder("SELECT * FROM evento");
 
@@ -51,6 +51,10 @@ public class EventoDao {
             }
             if (nome != null && !nome.isEmpty()) {
                 sql.append(" WHERE evento LIKE '%").append(nome).append("%'");
+            }
+
+            if (data != null && !data.isEmpty()) {
+                sql.append(" WHERE datainicial = '").append(data).append("'");
             }
 
             // Adicionando ordenação

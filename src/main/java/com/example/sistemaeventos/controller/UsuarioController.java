@@ -42,6 +42,11 @@ public class UsuarioController {
             usuarioService.criaUsuario(usuario);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            if(e.getMessage().contains("usuario_cpf_key")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CPF já cadastrado.");
+            } else if(e.getMessage().contains("usuario_email_key")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email já cadastrado.");
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -54,6 +59,11 @@ public class UsuarioController {
             usuarioService.atualizaUsuario(usuario, id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            if(e.getMessage().contains("usuario_cpf_key")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CPF já cadastrado.");
+            } else if(e.getMessage().contains("usuario_email_key")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email já cadastrado.");
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

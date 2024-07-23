@@ -8,7 +8,7 @@ import java.util.List;
 public interface EventoService {
 
 
-    List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome);
+    List<Evento> findAll(Integer page, Integer size, String sortBy, String sortOrder, Boolean disponivel, String nome, String data);
 
     void criaEvento(EventoDTO eventoDTO);
 
